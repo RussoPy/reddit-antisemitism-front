@@ -13,6 +13,7 @@ function App() {
   const [minScore, setMinScore] = useState(0.7);
   const [maxScore, setMaxScore] = useState(1.0);
   const [tab, setTab] = useState('users');
+  const [scanning, setScanning] = useState(false);
 
   useEffect(() => {
     async function fetchFlaggedUsers() {
@@ -159,11 +160,81 @@ function App() {
                   boxShadow: '0 2px 8px rgba(255,111,97,0.10)',
                   cursor: 'pointer',
                   transition: 'background 0.2s',
+                  marginRight: 16,
                 }}
                 disabled={loading}
               >
                 {loading ? 'Refreshing...' : 'Refresh'}
               </button>
+              <button
+                onClick={() => {
+                  setScanning(true);
+                  fetch('https://reddit-antisemitism-script.onrender.com/run', { method: 'POST' })
+                    .then(res => {
+                      if (!res.ok) {
+                        setScanning(false);
+                        alert('Failed to start search.');
+                      }
+                    })
+                    .catch(() => {
+                      setScanning(false);
+                      alert('Failed to start search.');
+                    });
+                }}
+                style={{
+                  marginTop: 16,
+                  padding: '10px 28px',
+                  fontSize: '1.1rem',
+                  fontWeight: 600,
+                  background: 'linear-gradient(90deg, #ff6f61 0%, #f7b267 100%)',
+                  color: '#232526',
+                  border: 'none',
+                  borderRadius: 8,
+                  boxShadow: '0 2px 8px rgba(255,111,97,0.10)',
+                  cursor: 'pointer',
+                  transition: 'background 0.2s',
+                }}
+              >
+                Search More
+              </button>
+              {scanning && (
+                <div style={{
+                  marginTop: 24,
+                  background: 'linear-gradient(90deg, #f7b267 0%, #ff6f61 100%)',
+                  color: '#232526',
+                  borderRadius: 12,
+                  padding: '18px 32px',
+                  fontWeight: 700,
+                  fontSize: '1.3rem',
+                  boxShadow: '0 2px 12px rgba(255,111,97,0.10)',
+                  textAlign: 'center',
+                  letterSpacing: '1px',
+                  maxWidth: 400,
+                  marginLeft: 'auto',
+                  marginRight: 'auto',
+                  border: '2px solid #ff6f61',
+                  position: 'relative',
+                }}>
+                  <button
+                    onClick={() => setScanning(false)}
+                    style={{
+                      position: 'absolute',
+                      top: 8,
+                      right: 12,
+                      background: 'none',
+                      border: 'none',
+                      color: '#232526',
+                      fontSize: '1.5rem',
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                      opacity: 0.7,
+                    }}
+                    aria-label="Close"
+                  >×</button>
+                  <span role="img" aria-label="scan" style={{ marginRight: 12 }}>🔎</span>
+                  Started scanning flagged users...
+                </div>
+              )}
               <div style={{ marginTop: 24, display: 'flex', justifyContent: 'center', gap: 24, flexWrap: 'wrap', alignItems: 'center' }}>
                 <input
                   type="text"

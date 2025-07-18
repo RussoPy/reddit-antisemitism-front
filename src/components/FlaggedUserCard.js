@@ -4,6 +4,11 @@ import React, { useState } from "react";
 function FlaggedUserCard({ user }) {
   const [open, setOpen] = useState(false);
 
+  // Calculate upload time and 'new' status using upload_date (ISO string)
+  const uploadTime = user.upload_date ? new Date(user.upload_date) : null;
+  const now = new Date();
+  const isNew = uploadTime && ((now - uploadTime) < 30 * 60 * 1000);
+
   return (
     <div
       style={{
@@ -23,7 +28,24 @@ function FlaggedUserCard({ user }) {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div>
           <h2 style={{ margin: 0, fontSize: '2rem', fontWeight: 700 }}>{user.author}</h2>
-          {/* Date removed as requested */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 4 }}>
+            <span style={{ fontSize: '1rem', color: '#f7b267', fontWeight: 500 }}>
+              Uploaded: {uploadTime ? uploadTime.toLocaleString() : '-'}
+            </span>
+            {isNew && (
+              <span style={{
+                background: '#ff6f61',
+                color: '#fff',
+                borderRadius: 6,
+                padding: '2px 10px',
+                fontWeight: 700,
+                fontSize: '0.95rem',
+                marginLeft: 4,
+                boxShadow: '0 2px 8px rgba(255,111,97,0.10)',
+                letterSpacing: '1px',
+              }}>NEW</span>
+            )}
+          </div>
         </div>
         <span style={{
           background: '#ff6f61',
