@@ -173,12 +173,12 @@ function App() {
                     .then(res => {
                       if (!res.ok) {
                         setScanning(false);
-                        alert('Failed to start search.');
+                        // Removed alert
                       }
                     })
                     .catch(() => {
                       setScanning(false);
-                      alert('Failed to start search.');
+                      // Removed alert
                     });
                 }}
                 style={{
