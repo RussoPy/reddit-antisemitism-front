@@ -82,7 +82,7 @@ function App() {
               cursor: 'pointer',
               transition: 'background 0.2s',
             }}
-          >Graph</button>
+          >Graphs</button>
           <button
             onClick={() => setTab('users')}
             style={{
@@ -108,7 +108,7 @@ function App() {
           color: '#fff',
           opacity: 0.7,
         }}>
-          <span style={{ background: '#ff6f61', borderRadius: 8, padding: '4px 12px', color: '#fff' }}>AI Moderation Dashboard</span>
+          <span style={{ background: '#ff6f61', borderRadius: 8, padding: '4px 12px', color: '#fff' }}>By Gal Russo</span>
         </div>
       </header>
       <main style={{
@@ -144,7 +144,7 @@ function App() {
                 )}
               </h2>
               <p style={{ color: '#f7b267', fontSize: '1.15rem', maxWidth: 700, margin: '0 auto' }}>
-                This dashboard presents <strong>all flagged Reddit users with a hate score above 0.7</strong>, as detected by AI moderation for potentially hateful content. Click a user card to view flagged post details, notes, and recent history. All data is read-only and sourced from Firestore.
+                This dashboard presents <strong>all flagged Reddit users with a hate score above 0.7</strong>, as detected by automated analysis for potentially hateful content. Click a user card to view flagged post details, notes, and recent history.
               </p>
               <button
                 onClick={fetchFlaggedUsers}

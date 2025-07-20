@@ -42,8 +42,8 @@ export default function KeywordPostGraph({ users }) {
   // Find the max count for scaling
   const maxCount = Math.max(...counts, 1);
   return (
-    <div style={{ padding: 32, textAlign: 'center', marginTop: 700 }}>
-      <h2 style={{ color: '#ff6f61', fontWeight: 700, marginBottom: 32 }}>
+    <div style={{ padding: 32, textAlign: 'center', marginTop: 80 }}>
+      <h2 style={{ color: '#ff6f61', fontWeight: 700, marginBottom: 32, textAlign: 'center' }}>
         Flagged Posts by Keyword
       </h2>
       <div style={{
@@ -94,10 +94,21 @@ export default function KeywordPostGraph({ users }) {
           ))}
         </span>
       </p>
-
       {/* Additional graphs below */}
-      <HateScoreOverTimeGraph users={users} />
-      <HateScoreVsKeywordGraph users={users} />
+      <div style={{ marginTop: 32 }}>
+        <HateScoreOverTimeGraph users={users} />
+        <hr style={{
+          border: 'none',
+          borderTop: '2px solid #2a5298',
+          margin: '32px auto 32px auto',
+          width: '60%',
+          opacity: 0.5
+        }} />
+        <h2 style={{ color: '#ff6f61', fontWeight: 700, margin: '0 0 32px 0', textAlign: 'center' }}>
+          Flagged Users by Hate Score
+        </h2>
+        <HateScoreVsKeywordGraph users={users} />
+      </div>
     </div>
   );
 }

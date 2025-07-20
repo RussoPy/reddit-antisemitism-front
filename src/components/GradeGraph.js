@@ -24,25 +24,29 @@ export default function GradeGraph({ users }) {
     <React.Fragment>
       <h2 style={{ color: '#ff6f61', fontWeight: 700, fontSize: '2rem', marginTop: 80, marginBottom: 60, textAlign: 'center' }}>Flagged Users by Hate Score</h2>
       <div style={{ padding: 32, textAlign: 'center', marginBottom: 80 }}>
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-end', gap: 16, height: 100 }}>
-          {buckets.slice(5).map((count, i) => (
-            <div key={i+5} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <div style={{
-                width: 36,
-                height: Math.max(8, count * 8),
-                background: colors[i+5],
-                borderRadius: 8,
-                boxShadow: '0 2px 8px rgba(44,62,80,0.10)',
-                marginBottom: 8,
-                transition: 'height 0.3s',
-              }}></div>
-              <span style={{ color: '#fff', fontWeight: 600, fontSize: '1rem' }}>{((i+5)/10).toFixed(1)}-{((i+6)/10).toFixed(1)}</span>
-              <span style={{ color: '#f7b267', fontWeight: 500, fontSize: '1rem' }}>{count}</span>
-            </div>
-          ))}
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-end', gap: 16, height: 80 }}>
+          {(() => {
+            const maxCount = Math.max(...buckets.slice(5));
+            const maxBarHeight = 48; // px
+            return buckets.slice(5).map((count, i) => (
+              <div key={i+5} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <div style={{
+                  width: 36,
+                  height: Math.max(8, (count / (maxCount || 1)) * maxBarHeight),
+                  background: colors[i+5],
+                  borderRadius: 8,
+                  boxShadow: '0 2px 8px rgba(44,62,80,0.10)',
+                  marginBottom: 8,
+                  transition: 'height 0.3s',
+                }}></div>
+                <span style={{ color: '#fff', fontWeight: 600, fontSize: '1rem' }}>{((i+5)/10).toFixed(1)}</span>
+                <span style={{ color: '#f7b267', fontWeight: 500, fontSize: '1rem' }}>{count}</span>
+              </div>
+            ));
+          })()}
         </div>
         <p style={{ color: '#f7b267', fontSize: '1.15rem', marginTop: 32 }}>
-          This graph shows the number of flagged users in each hate score range (0.5 to 1.0).
+          This graph shows the number of flagged users for each hate score value (0.5 to 1.0).
         </p>
       </div>
     </React.Fragment>
